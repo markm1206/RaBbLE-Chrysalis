@@ -74,6 +74,16 @@ body.boot-departing { animation: page-fade-out 0.55s ease forwards; }
   margin-left: 2px;
   color: var(--neon-violet);
 }
+.sb-pulse {
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 1px 3px;
+  outline: none;
+}
+.sb-pulse:hover,
+.sb-pulse:focus {
+  background: rgba(0, 245, 255, 0.08);
+}
 
 /* ── Entity metrics panel — drops below the Waybar center ───────────────
    position:fixed so it escapes the statusbar's overflow:hidden context.

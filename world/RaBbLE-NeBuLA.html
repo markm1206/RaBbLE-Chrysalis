@@ -146,6 +146,7 @@
               x-ref="entity2d"
               mode="idle"
               particle-count="480"
+              :entropy="entropy"
               overscan="2.55">
             </rabble-entity>
           </div>
@@ -159,6 +160,7 @@
           </div>
           <div class="status-line">
             <strong>state:</strong> <span x-text="entityState"></span> ·
+            <strong>fps:</strong> <span x-text="fps"></span> ·
             <strong>entropy:</strong> <span x-text="entropy.toFixed(3)"></span> ·
             <strong>particles:</strong> <span x-text="particleCount"></span>
           </div>
@@ -300,10 +302,10 @@ document.addEventListener('alpine:init', () => {
     },
 
     setEntropy(val) {
-      this.entropy = val;
+      this.entropy = Math.max(0, Math.min(1, Number(val) || 0));
       const el = this.$refs.entity2d;
-      if (el && el.setEntropy) el.setEntropy(val);
-      if (this._threeBackend) this._threeBackend.setEntropy(val);
+      if (el && el.setEntropy) el.setEntropy(this.entropy);
+      if (this._threeBackend) this._threeBackend.setEntropy(this.entropy);
     },
   }));
 });

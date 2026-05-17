@@ -75,7 +75,12 @@
               x-text="{ idle: 'online', thinking: 'processing', speaking: 'speaking' }[entityState] || 'online'">
         </span>
         <span class="sb-sep">·</span>
-        <span class="sb-pulse">
+        <span class="sb-pulse"
+              @click.stop="metricsOpen = !metricsOpen"
+              role="button"
+              tabindex="0"
+              @keydown.enter.stop="metricsOpen = !metricsOpen"
+              aria-label="Performance metrics">
           <span class="sb-hide-sm">pulse </span><span class="sb-val" x-text="pulse + 'ms'"></span>
         </span>
         <span class="sb-chevron" aria-hidden="true" x-text="metricsOpen ? '▲' : '▽'"></span>
@@ -87,7 +92,7 @@
              @click.stop
              role="region"
              aria-label="Entity metrics">
-          <div class="sb-metrics-head">:: entity vitals</div>
+          <div class="sb-metrics-head">:: performance</div>
           <div class="sb-metric">
             <span class="sb-mk">pulse</span>
             <span class="sb-mv hi-c" x-text="pulse + 'ms'"></span>
