@@ -178,9 +178,12 @@
           </div>
           <div class="status-line">
             <strong>state:</strong> <span x-text="entityState"></span> ·
-            <strong>fps:</strong> <span x-text="fps"></span> ·
-            <strong>particles:</strong> <span x-text="particleCount"></span> ·
-            <strong>links:</strong> <span x-text="linkCount"></span>
+            <strong>fps:</strong> <span :style="fps < 45 ? 'color:var(--rabble-red,#e05c6f)' : fps < 58 ? 'color:var(--rabble-yellow,#f1fa8c)' : ''" x-text="fps"></span> ·
+            <strong>particles:</strong> <span x-text="particleCount" :style="particleCount < targetParticles ? 'color:var(--rabble-yellow,#f1fa8c)' : ''"></span>/<span x-text="targetParticles" style="color:var(--rabble-muted)"></span> ·
+            <strong>glow:</strong> <span :style="adaptiveGlow < 0.8 ? 'color:var(--rabble-yellow,#f1fa8c)' : ''" x-text="Math.round(adaptiveGlow * 100) + '%'"></span> ·
+            <button @click.stop="toggleAdaptive()" :style="adaptive ? 'color:var(--rabble-green,#50fa7b)' : 'color:var(--rabble-muted)'"
+              style="background:none;border:none;cursor:pointer;font-family:var(--rabble-font-mono);font-size:10px;padding:0;letter-spacing:0.08em"
+              x-text="adaptive ? 'adaptive:on' : 'adaptive:off'"></button>
           </div>
         </div>
       </div>
@@ -216,9 +219,12 @@ document.addEventListener('alpine:init', () => {
     entityState: 'idle',
     entropy: 0.3,
     particleCount: 480,
+    targetParticles: 480,
     connectionDist: 82,
     connectionAlpha: 0.18,
     linkCount: 0,
+    adaptiveGlow: 1.0,
+    adaptive: true,
     activeBackend: 'Canvas2D + Three.js',
     activePanel: 'canvas2d',
     fps: 60,
@@ -304,9 +310,12 @@ document.addEventListener('alpine:init', () => {
         const m = el._backend.getPerformanceMetrics();
         this.fps             = m.fps             ?? 60;
         this.particleCount   = m.particles        ?? this.particleCount;
+        this.targetParticles = m.targetParticles  ?? this.targetParticles;
         this.linkCount       = m.links            ?? 0;
         this.connectionDist  = m.connectionDist   ?? this.connectionDist;
         this.connectionAlpha = m.connectionAlpha  ?? this.connectionAlpha;
+        this.adaptive        = m.adaptive         ?? this.adaptive;
+        this.adaptiveGlow    = m.adaptiveGlow     ?? this.adaptiveGlow;
       }
     },
 
@@ -354,6 +363,12 @@ document.addEventListener('alpine:init', () => {
       this.connectionAlpha = val;
       const el = this.$refs.entity2d;
       if (el && el.setConnectionAlpha) el.setConnectionAlpha(val);
+    },
+
+    toggleAdaptive() {
+      this.adaptive = !this.adaptive;
+      const el = this.$refs.entity2d;
+      if (el && el.setAdaptive) el.setAdaptive(this.adaptive);
     },
   }));
 });
