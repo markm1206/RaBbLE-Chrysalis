@@ -152,17 +152,35 @@
           </div>
           <div class="control-row">
             <button class="rabble-btn rabble-btn-ghost rabble-btn-sm" @click.stop="triggerBoot()">Summon</button>
+            <button class="rabble-btn rabble-btn-ghost rabble-btn-sm" @click.stop="setEntityState('idle')">Idle</button>
+            <button class="rabble-btn rabble-btn-ghost rabble-btn-sm" @click.stop="setEntityState('thinking')">Think</button>
+            <button class="rabble-btn rabble-btn-ghost rabble-btn-sm" @click.stop="setEntityState('speaking')">Speak</button>
           </div>
           <div class="control-row">
-            <label style="font-family:var(--rabble-font-mono);font-size:10px;color:var(--rabble-cyan);letter-spacing:0.1em;text-transform:uppercase">Entropy</label>
+            <label style="font-family:var(--rabble-font-mono);font-size:10px;color:var(--rabble-cyan);letter-spacing:0.1em;text-transform:uppercase;min-width:5.5em">Entropy</label>
             <input type="range" min="0" max="100" :value="Math.round(entropy * 100)" @input="setEntropy($event.target.value / 100)" style="flex:1;accent-color:var(--rabble-magenta, #ff2d78)">
             <span style="font-family:var(--rabble-font-mono);font-size:10px;color:var(--rabble-violet);min-width:3em" x-text="entropy.toFixed(2)"></span>
+          </div>
+          <div class="control-row">
+            <label style="font-family:var(--rabble-font-mono);font-size:10px;color:var(--rabble-cyan);letter-spacing:0.1em;text-transform:uppercase;min-width:5.5em">Particles</label>
+            <input type="range" min="50" max="900" step="10" :value="particleCount" @input="setParticleCount(+$event.target.value)" style="flex:1;accent-color:var(--rabble-magenta, #ff2d78)">
+            <span style="font-family:var(--rabble-font-mono);font-size:10px;color:var(--rabble-violet);min-width:3em" x-text="particleCount"></span>
+          </div>
+          <div class="control-row">
+            <label style="font-family:var(--rabble-font-mono);font-size:10px;color:var(--rabble-cyan);letter-spacing:0.1em;text-transform:uppercase;min-width:5.5em">Conn Dist</label>
+            <input type="range" min="20" max="200" step="2" :value="connectionDist" @input="setConnectionDist(+$event.target.value)" style="flex:1;accent-color:var(--rabble-cyan, #00f5ff)">
+            <span style="font-family:var(--rabble-font-mono);font-size:10px;color:var(--rabble-violet);min-width:3em" x-text="connectionDist + 'px'"></span>
+          </div>
+          <div class="control-row">
+            <label style="font-family:var(--rabble-font-mono);font-size:10px;color:var(--rabble-cyan);letter-spacing:0.1em;text-transform:uppercase;min-width:5.5em">Conn Alpha</label>
+            <input type="range" min="0" max="100" :value="Math.round(connectionAlpha * 100)" @input="setConnectionAlpha($event.target.value / 100)" style="flex:1;accent-color:var(--rabble-cyan, #00f5ff)">
+            <span style="font-family:var(--rabble-font-mono);font-size:10px;color:var(--rabble-violet);min-width:3em" x-text="connectionAlpha.toFixed(2)"></span>
           </div>
           <div class="status-line">
             <strong>state:</strong> <span x-text="entityState"></span> ·
             <strong>fps:</strong> <span x-text="fps"></span> ·
-            <strong>entropy:</strong> <span x-text="entropy.toFixed(3)"></span> ·
-            <strong>particles:</strong> <span x-text="particleCount"></span>
+            <strong>particles:</strong> <span x-text="particleCount"></span> ·
+            <strong>links:</strong> <span x-text="linkCount"></span>
           </div>
         </div>
       </div>
@@ -198,6 +216,9 @@ document.addEventListener('alpine:init', () => {
     entityState: 'idle',
     entropy: 0.3,
     particleCount: 480,
+    connectionDist: 82,
+    connectionAlpha: 0.18,
+    linkCount: 0,
     activeBackend: 'Canvas2D + Three.js',
     activePanel: 'canvas2d',
     fps: 60,
@@ -281,8 +302,11 @@ document.addEventListener('alpine:init', () => {
       const el = this.$refs.entity2d;
       if (el && el._backend) {
         const m = el._backend.getPerformanceMetrics();
-        this.fps = m.fps || 60;
-        this.particleCount = m.particles || 480;
+        this.fps             = m.fps             ?? 60;
+        this.particleCount   = m.particles        ?? this.particleCount;
+        this.linkCount       = m.links            ?? 0;
+        this.connectionDist  = m.connectionDist   ?? this.connectionDist;
+        this.connectionAlpha = m.connectionAlpha  ?? this.connectionAlpha;
       }
     },
 
@@ -306,6 +330,30 @@ document.addEventListener('alpine:init', () => {
       const el = this.$refs.entity2d;
       if (el && el.setEntropy) el.setEntropy(this.entropy);
       if (this._threeBackend) this._threeBackend.setEntropy(this.entropy);
+    },
+
+    setEntityState(state) {
+      this.entityState = state;
+      const el = this.$refs.entity2d;
+      if (el && el.setEntityState) el.setEntityState(state);
+    },
+
+    setParticleCount(n) {
+      this.particleCount = n;
+      const el = this.$refs.entity2d;
+      if (el && el.setParticleCount) el.setParticleCount(n);
+    },
+
+    setConnectionDist(px) {
+      this.connectionDist = px;
+      const el = this.$refs.entity2d;
+      if (el && el.setConnectionDist) el.setConnectionDist(px);
+    },
+
+    setConnectionAlpha(val) {
+      this.connectionAlpha = val;
+      const el = this.$refs.entity2d;
+      if (el && el.setConnectionAlpha) el.setConnectionAlpha(val);
     },
   }));
 });
