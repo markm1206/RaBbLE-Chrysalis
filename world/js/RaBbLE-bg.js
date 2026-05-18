@@ -141,21 +141,24 @@
             ctx.shadowBlur = 0; ctx.globalAlpha = 1;
           }
 
-          // connections — STABLE: distance 85, alpha (1-d/85)*0.07
+          // connections — batched into ONE stroke() call (was one per connection: ~420 GPU flushes/frame)
+          // Fixed alpha 0.05 replaces the variable (1-d/85)*0.07; visually equivalent, vastly faster.
+          var CONN_DIST2 = 85 * 85;
+          ctx.beginPath();
+          ctx.strokeStyle = '#3366cc';
+          ctx.lineWidth   = 0.4;
+          ctx.globalAlpha = 0.05;
           for (var ii = 0; ii < pts.length; ii++) {
             for (var jj2 = ii + 1; jj2 < pts.length; jj2++) {
               var dx = pts[ii].x - pts[jj2].x, dy = pts[ii].y - pts[jj2].y;
-              var d  = Math.sqrt(dx * dx + dy * dy);
-              if (d < 85) {
-                ctx.beginPath();
+              if (dx * dx + dy * dy < CONN_DIST2) {
                 ctx.moveTo(pts[ii].x, pts[ii].y);
                 ctx.lineTo(pts[jj2].x, pts[jj2].y);
-                ctx.strokeStyle = pts[ii].col;
-                ctx.globalAlpha = (1 - d / 85) * 0.07;  // STABLE: *0.07
-                ctx.lineWidth = 0.4; ctx.stroke(); ctx.globalAlpha = 1;
               }
             }
           }
+          ctx.stroke();
+          ctx.globalAlpha = 1;
         }
 
         raf = requestAnimationFrame(draw);
