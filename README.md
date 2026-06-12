@@ -1,12 +1,17 @@
-# RaBbLE-Xperimental
+# RaBbLE-Chrysalis
 
-Playground for the RaBbLE Collective's highest-entropy projects — things that are inherently incomplete, unstable, or mid-evolution, but contain real features and insights worth preserving and browsing.
+Genesis archive and reliquary for the RaBbLE Collective. This is where the pre-Collective experiments live — frozen in amber, preserved for reference, not meant to run.
 
-This is not a graveyard. It's a substrate. Code here may be extracted, revived, or mined for patterns as the ecosystem matures.
+Chrysalis holds two kinds of things:
+
+- **Genesis code** — the earliest RaBbLE prototypes, before the Collective existed: animated faces, entropy engines, intelligence servers, WebOS experiments.
+- **Reliquary branches** — frozen branch snapshots from active member repos, sealed when their development line ended. They're here so the active repos stay clean.
+
+Nothing here is current. Nothing here is meant to evolve. If something gets extracted and revived, it moves to an active member repo. Chrysalis stays amber.
 
 ---
 
-## Structure
+## Genesis Code (dev branch)
 
 ```
 Python-Xperiments/
@@ -29,16 +34,18 @@ JS-Xperiments/
 | `JS-Xperiments/WebOS` | `markm1206/RaBbLE-Xperimental` | `archive/rabble-js` |
 | `JS-Xperiments/NeBuLA-JS` | `markm1206/RaBbLE-NeBuLA-JS` | `archive/nebula-*` |
 
-True dev history for each project lives in the corresponding `archive/` branch. The code here is a readable snapshot.
+True dev history for each project lives in the corresponding `archive/` branch. The code in `dev` is a readable snapshot.
 
 ---
 
 ## Branches
 
+### Genesis archive (pre-Collective experiments)
+
 | Branch | Purpose |
 |--------|---------|
-| `main` | Scaffold and orientation |
-| `dev` | All project code, active work |
+| `main` | Orientation and branch map |
+| `dev` | All genesis code — readable snapshot |
 | `archive/rabble-collective` | RaBbLE-Collective v0 scaffold |
 | `archive/rabble-py-main` | RaBbLE.py full git history |
 | `archive/rabble-py-speech-to-text` | RaBbLE.py speech branch |
@@ -47,3 +54,14 @@ True dev history for each project lives in the corresponding `archive/` branch. 
 | `archive/nebula-main` | NeBuLA-JS main |
 | `archive/nebula-RaBbLE-dev` | NeBuLA RaBbLE dev |
 | `archive/nebula-BaBbLE-dev` | NeBuLA BaBbLE dev |
+
+### Reliquary — RaBbLE-OS (sealed branch snapshots)
+
+| Branch | Origin branch in RaBbLE-OS | Sealed state |
+|--------|---------------------------|--------------|
+| `reliquary/os/babble-embryo` | `reliquary/babble-embryo` | BaBbLE-dev era |
+| `reliquary/os/ep1-preclean` | `reliquary/ep1-preclean` | Pre-EP1 cleanup snapshot |
+| `reliquary/os/grimoire-expansion` | `reliquary/grimoire-expansion` | Grimoire expansion era |
+| `reliquary/os/grimoire-seed` | `reliquary/grimoire-seed` | Grimoire seed era |
+| `reliquary/os/legacy-bootstrap` | `reliquary/legacy-bootstrap` | Fedora 43 dev bootstrap |
+| `reliquary/os/os-dev-bootstrap` | `reliquary/os-dev-bootstrap` | OS dev bootstrap era |
