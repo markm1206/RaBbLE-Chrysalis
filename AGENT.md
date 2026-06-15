@@ -7,11 +7,13 @@
 
 ## What This Repo Is
 
-Chrysalis holds the genesis code and reliquary branch snapshots that show where RaBbLE came from. Two kinds of things live here:
+Chrysalis holds the genesis code and reliquary branch snapshots that show where RaBbLE came from — ideas outgrown or integrated, preserved for their history and insights. Three kinds of things live here:
 
-**Genesis code** (on `dev`): The pre-Collective experiments — Python animated faces, entropy visualization engines, WebOS prototypes, intelligence servers. These are readable snapshots, frozen at the moment the Collective took over active development.
+**Genesis code** (on `main`): The pre-Collective experiments — Python animated faces, entropy visualization engines, WebOS prototypes, intelligence servers. Readable snapshots frozen at the moment the Collective took over.
 
-**Reliquary branches**: Sealed branch snapshots migrated from active member repos when their development line ended. Moved here so RaBbLE-OS and other members stay clean. Prefixed `reliquary/<member>/`.
+**Reliquary — OS branches**: Sealed snapshots of RaBbLE-OS development eras, each representing a phase of the substrate's evolution. Prefixed `reliquary/os/`.
+
+**Reliquary — other members** (incoming): As World, sCoRE, and other members evolve through episodes, superseded branch eras will be sealed here.
 
 ---
 
@@ -30,7 +32,7 @@ One job only: **preserve the past so active repos don't have to carry it.**
 
 ```bash
 # Genesis code snapshot
-git checkout dev && ls
+git checkout main && ls
 
 # Full git history for a genesis project
 git checkout archive/rabble-py-main
@@ -45,7 +47,6 @@ git branch -a | grep reliquary/os/
 
 See `README.md` for the full branch map and provenance table.
 
-- `main` — orientation and branch map
-- `dev` — all genesis code
+- `main` — genesis code snapshot + orientation and branch map
 - `archive/*` — full git histories from pre-Collective origin repos
-- `reliquary/os/*` — sealed RaBbLE-OS development snapshots
+- `reliquary/os/*` — sealed RaBbLE-OS development era snapshots
