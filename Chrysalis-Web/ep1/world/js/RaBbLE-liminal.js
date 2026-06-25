@@ -87,15 +87,15 @@
     },
   ];
 
-  var match = window.location.pathname.match(/^(\/(?:chry|chrys)talis(?:-web)?\/)/i);
+  var match = window.location.pathname.match(/^(\/(chrysalis|chrystalis)(?:-web)?\/)/i);
   var basePath = match ? match[1] : '/';
 
   function resolveUrl(url) {
     if (basePath === '/') return url;
-    // World EP1 app lives at /chrysalis/world/ — absolute portal URLs like /world/X.html
-    // must resolve to /chrysalis/world/world/X.html (world/ subdir inside the archive).
+    // World EP1 app lives at /chrysalis/ep1/ — absolute portal URLs like /world/X.html
+    // must resolve to /chrysalis/ep1/world/X.html (ep1/ subdir inside the archive).
     if (url === '/') return basePath + 'index.html';
-    if (url.indexOf('/') === 0) return basePath + 'world' + url;
+    if (url.indexOf('/') === 0) return basePath + 'ep1' + url;
     return url;
   }
 
