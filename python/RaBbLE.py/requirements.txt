@@ -1,8 +1,0 @@
-pygame
-pyaudio
-numpy
-openai-whisper
-faster-whisper
-pyyaml
-langchain
-google-adk
