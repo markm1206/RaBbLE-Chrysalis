@@ -141,8 +141,10 @@
 
   function resolveUrl(url) {
     if (basePath === '/') return url;
-    if (url === '/') return basePath + 'chrysalis/index.html';
-    if (url.indexOf('/') === 0) return basePath + 'chrysalis/' + url.slice(1);
+    // World EP1 app lives at /chrysalis/world/ — absolute page URLs like /world/X.html
+    // must resolve to /chrysalis/world/world/X.html (world/ subdir inside the archive).
+    if (url === '/') return basePath + 'index.html';
+    if (url.indexOf('/') === 0) return basePath + 'world' + url;
     return url;
   }
 
