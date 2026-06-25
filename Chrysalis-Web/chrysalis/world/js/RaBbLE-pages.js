@@ -135,6 +135,21 @@
     },
   ];
 
+  // Helper to dynamically resolve URLs under a subpath like /chrysalis/ or /chrystalis/
+  var match = window.location.pathname.match(/^(\/(?:chry|chrys)talis(?:-web)?\/)/i);
+  var basePath = match ? match[1] : '/';
+
+  function resolveUrl(url) {
+    if (basePath === '/') return url;
+    if (url === '/') return basePath + 'chrysalis/index.html';
+    if (url.indexOf('/') === 0) return basePath + 'chrysalis/' + url.slice(1);
+    return url;
+  }
+
+  window.RaBbLE_PAGES.forEach(function (p) {
+    p.url = resolveUrl(p.url);
+  });
+
   // Helper: the guided journey, ordered by act. Used by wayfinding chrome.
   window.RaBbLE_JOURNEY = window.RaBbLE_PAGES
     .filter(function (p) { return typeof p.act === 'number'; })

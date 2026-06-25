@@ -87,6 +87,20 @@
     },
   ];
 
+  var match = window.location.pathname.match(/^(\/(?:chry|chrys)talis(?:-web)?\/)/i);
+  var basePath = match ? match[1] : '/';
+
+  function resolveUrl(url) {
+    if (basePath === '/') return url;
+    if (url === '/') return basePath + 'chrysalis/index.html';
+    if (url.indexOf('/') === 0) return basePath + 'chrysalis/' + url.slice(1);
+    return url;
+  }
+
+  PORTALS.forEach(function (p) {
+    p.url = resolveUrl(p.url);
+  });
+
   /* ── Transmission pools ──────────────────────────────────────────── */
 
   var AMBIENT = [

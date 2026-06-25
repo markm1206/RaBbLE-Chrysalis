@@ -410,7 +410,7 @@ document.addEventListener('alpine:init', () => {
       this._setEntityState('speaking');
       setTimeout(() => {
         document.body.classList.add('boot-departing');
-        setTimeout(() => { window.location.href = 'world/RaBbLE-Chat.html'; }, 900);
+        setTimeout(() => { window.location.href = 'RaBbLE-Chat.html'; }, 900);
       }, 1200);
     },
 
