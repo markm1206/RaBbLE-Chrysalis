@@ -80,6 +80,7 @@ const server = http.createServer((req, res) => {
         '.jpg': 'image/jpeg',
         '.jpeg': 'image/jpeg',
         '.ico': 'image/x-icon',
+        '.gif': 'image/gif',
         '.map': 'application/json',
       };
       const contentType = contentTypes[ext] || 'application/octet-stream';

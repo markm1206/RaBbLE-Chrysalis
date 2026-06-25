@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#03000b">
+<title>RaBbLE-Server · Chrysalis Artifact</title>
+<meta name="description" content="RaBbLE-Server — the first agentic intelligence API: FastAPI microservice, multi-provider LLM routing, JWT auth, Railway deploy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --magenta: #ff2d78; --cyan: #00f5ff; --violet: #bf5fff; --pink: #ff79c6;
+  --green: #50fa7b;  --bg: #03000b;   --bg-surface: #0a0010;
+  --surface: #12132a; --raised: #1a1b2e; --border: #2a2840;
+  --text: #e8e6f0;    --muted: #6b6880;  --dimmer: #3d3860;
+  --font-ui: 'Exo 2', sans-serif; --font-mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--text); font-family: var(--font-ui); min-height: 100vh; }
+
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 55% 40% at 15% 35%, rgba(80,250,123,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 80% 65%, rgba(0,245,255,0.04) 0%, transparent 55%);
+}
+
+.scanlines {
+  position: fixed; inset: 0; z-index: 999; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
+}
+
+.breadcrumb {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(3,0,11,0.92); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  height: 36px; display: flex; align-items: center;
+  padding: 0 24px; gap: 8px;
+  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+}
+.breadcrumb a { color: var(--cyan); text-decoration: none; transition: color 0.2s; }
+.breadcrumb a:hover { color: var(--text); }
+.breadcrumb .bc-glyph { color: var(--green); }
+.breadcrumb .bc-sep { color: var(--dimmer); }
+.breadcrumb .bc-current { color: var(--text); }
+.breadcrumb .bc-badge {
+  margin-left: auto; border: 1px solid var(--green);
+  padding: 2px 8px; border-radius: 3px; color: var(--green); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+
+main { max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+
+.artifact-hero { margin-bottom: 48px; }
+.artifact-eyebrow {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--green); margin-bottom: 14px;
+}
+.artifact-title {
+  font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.8rem);
+  text-transform: none; margin-bottom: 12px;
+  text-shadow: 0 0 30px rgba(80,250,123,0.2);
+}
+.artifact-subtitle {
+  font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+  letter-spacing: 0.08em; margin-bottom: 20px;
+}
+.artifact-lede {
+  font-size: 0.95rem; line-height: 1.65; color: var(--muted); max-width: 620px;
+}
+.artifact-lede strong { color: var(--text); }
+
+.section-label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::after { content: ''; flex: 1; border-top: 1px solid var(--border); }
+
+/* Archive notice */
+.archive-notice {
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--green); border-radius: 8px;
+  padding: 16px 20px; margin-bottom: 48px;
+  font-size: 0.88rem; line-height: 1.6; color: var(--muted);
+}
+.archive-notice strong { color: var(--green); }
+
+/* Architecture diagram */
+.arch-section { margin-bottom: 56px; }
+.arch-diagram {
+  background: var(--raised); border: 1px solid var(--border); border-radius: 10px;
+  padding: 28px 32px;
+  font-family: var(--font-mono); font-size: 12px; line-height: 2;
+  color: var(--muted); overflow-x: auto;
+}
+.arch-diagram .layer { color: var(--green); }
+.arch-diagram .box   { color: var(--cyan); }
+.arch-diagram .arrow { color: var(--dimmer); }
+.arch-diagram .note  { color: var(--dimmer); font-size: 11px; }
+.arch-diagram .hl    { color: var(--text); }
+
+/* Service cards */
+.services-section { margin-bottom: 56px; }
+.service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.service-card {
+  background: var(--raised); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px 18px;
+}
+.service-label {
+  font-family: var(--font-mono); font-size: 10px; color: var(--green);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;
+}
+.service-file {
+  font-family: var(--font-mono); font-size: 11px; color: var(--cyan);
+  margin-bottom: 8px;
+}
+.service-desc { font-size: 0.85rem; line-height: 1.5; color: var(--muted); }
+.service-desc strong { color: var(--text); }
+
+/* Source tree */
+.source-tree {
+  background: var(--raised); border: 1px solid var(--border); border-radius: 10px;
+  padding: 24px; overflow-x: auto;
+  font-family: var(--font-mono); font-size: 12px; line-height: 1.8; color: var(--muted);
+}
+.source-tree .dir  { color: var(--cyan); }
+.source-tree .file { color: var(--muted); }
+.source-tree .note { color: var(--dimmer); font-size: 11px; }
+.source-tree .hl   { color: var(--green); }
+
+/* Stack pills */
+.stack-section { margin-bottom: 48px; }
+.stack-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.pill {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+  padding: 5px 12px; border-radius: 4px;
+  border: 1px solid var(--border); color: var(--muted); background: var(--raised);
+}
+
+/* Footer */
+.archive-banner {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  height: 30px; background: rgba(3,0,11,0.9); backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 20px; gap: 10px;
+  font-family: var(--font-mono); font-size: 10px; color: var(--dimmer);
+}
+.archive-banner .ab-glyph { color: var(--magenta); }
+.archive-banner .ab-mid { flex: 1; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<nav class="breadcrumb">
+  <span class="bc-glyph">✦</span>
+  <a href="../../index.html">Chrysalis</a>
+  <span class="bc-sep">/</span>
+  <a href="../index.html">Python-Xperiments</a>
+  <span class="bc-sep">/</span>
+  <span class="bc-current">RaBbLE-Server</span>
+  <span class="bc-badge">source archive</span>
+</nav>
+
+<main>
+
+  <div class="artifact-hero">
+    <div class="artifact-eyebrow">✦ python · server · pre-collective</div>
+    <h1 class="artifact-title">RaBbLE-Server</h1>
+    <div class="artifact-subtitle">origin: markm1206/RaBbLE-Xperimental · archive: archive/raBbLE-server</div>
+    <p class="artifact-lede">
+      The <strong>first agentic intelligence API</strong> — a FastAPI microservice harness for routing
+      conversations, managing multi-step workflows, and orchestrating LLM providers. Built before sCoRE,
+      before the Collective. The patterns here — stateless services, multi-provider routing, harness/service
+      separation — directly informed the sCoRE architecture.
+    </p>
+  </div>
+
+  <div class="archive-notice">
+    <strong>Archive · source view</strong> — This project is a Python server application. It cannot run in the browser.
+    The architecture and source code are documented here as a reference artifact.
+  </div>
+
+  <!-- Architecture -->
+  <section class="arch-section">
+    <div class="section-label">architecture</div>
+    <div class="arch-diagram">
+<span class="hl">RaBbLE-Server</span> — harness around stateless microservices
+
+<span class="layer">HARNESS LAYER</span>             <span class="note">← deployment, secrets, env</span>
+  <span class="arrow">└─</span> <span class="box">harness/</span>
+       deploy.sh            <span class="note">← Railway TUI deploy</span>
+       local.sh             <span class="note">← start locally</span>
+       env_gen.sh           <span class="note">← .secrets → .env</span>
+       railway_ctl.sh       <span class="note">← manage Railway project</span>
+
+<span class="layer">SERVICE LAYER</span>              <span class="note">← application logic only</span>
+  <span class="arrow">└─</span> <span class="box">services/intelligence/</span>
+       main.py              <span class="note">← FastAPI app, all routes</span>
+       llm.py               <span class="note">← Groq + OpenRouter routing</span>
+       agents.py            <span class="note">← RaBbLE persona, workflows</span>
+       auth.py              <span class="note">← JWT + API key auth</span>
+       workflows.py         <span class="note">← agentic state machine</span>
+       rate_limit.py        <span class="note">← sliding-window limiter</span>
+       audit.py             <span class="note">← append-only JSONL log</span>
+    </div>
+  </section>
+
+  <!-- Services breakdown -->
+  <section class="services-section">
+    <div class="section-label">intelligence service modules</div>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="service-label">LLM Router</div>
+        <div class="service-file">llm.py</div>
+        <p class="service-desc"><strong>Multi-provider</strong> LLM client — Groq and OpenRouter backends, unified interface. The prototype for sCoRE's provider abstraction.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-label">Persona Engine</div>
+        <div class="service-file">agents.py</div>
+        <p class="service-desc"><strong>RaBbLE persona</strong> and agentic workflow definitions. The first attempt at encoding RaBbLE's character in code.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-label">Auth</div>
+        <div class="service-file">auth.py · auth_routes.py</div>
+        <p class="service-desc">JWT + API key authentication. Register / token endpoints. <strong>Rate limiting</strong> via sliding-window limiter.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-label">Workflow Engine</div>
+        <div class="service-file">workflows.py</div>
+        <p class="service-desc"><strong>Agentic state machine</strong> — multi-step conversation workflows. First concept of persistent agent state.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-label">Audit Log</div>
+        <div class="service-file">audit.py</div>
+        <p class="service-desc"><strong>Append-only JSONL</strong> event log — every action recorded. The observability primitive sCoRE inherited.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-label">Deployment</div>
+        <div class="service-file">railway.json · Procfile</div>
+        <p class="service-desc">Railway-native deployment config. <strong>Fully self-contained</strong> — any service independently deployable.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Source tree -->
+  <section style="margin-bottom:56px">
+    <div class="section-label">source structure</div>
+    <div class="source-tree">
+<span class="hl">RaBbLE-Server/</span>
+├── <span class="file">secrets.example</span>             <span class="note">← copy to .secrets, fill keys</span>
+├── <span class="dir">harness/</span>                    <span class="note">← deployment only, no app logic</span>
+│   ├── <span class="file">deploy.sh</span>               <span class="note">← interactive Railway TUI</span>
+│   ├── <span class="file">local.sh</span>
+│   ├── <span class="file">env_gen.sh</span>
+│   └── <span class="file">railway_ctl.sh</span>
+└── <span class="dir">services/</span>
+    └── <span class="dir">intelligence/</span>           <span class="note">← stateless FastAPI microservice</span>
+        ├── <span class="hl">main.py</span>             <span class="note">← all routes</span>
+        ├── <span class="hl">llm.py</span>              <span class="note">← Groq + OpenRouter</span>
+        ├── <span class="hl">agents.py</span>           <span class="note">← persona + workflows</span>
+        ├── <span class="file">auth.py</span>
+        ├── <span class="file">auth_routes.py</span>
+        ├── <span class="hl">workflows.py</span>
+        ├── <span class="file">rate_limit.py</span>
+        ├── <span class="file">audit.py</span>
+        ├── <span class="file">actions.py</span>          <span class="note">← pending action store</span>
+        ├── <span class="file">requirements.txt</span>
+        ├── <span class="file">env.defaults</span>        <span class="note">← committed, non-secret defaults</span>
+        ├── <span class="file">railway.json</span>
+        ├── <span class="file">Procfile</span>
+        └── <span class="file">test_api.sh</span>         <span class="note">← API smoke test</span>
+    </div>
+  </section>
+
+  <!-- Stack -->
+  <section class="stack-section">
+    <div class="section-label">tech stack</div>
+    <div class="stack-pills">
+      <span class="pill">Python 3</span>
+      <span class="pill">FastAPI</span>
+      <span class="pill">Groq</span>
+      <span class="pill">OpenRouter</span>
+      <span class="pill">JWT</span>
+      <span class="pill">Railway</span>
+      <span class="pill">JSONL audit</span>
+      <span class="pill">Sliding-window rate limit</span>
+    </div>
+  </section>
+
+</main>
+
+<footer class="archive-banner">
+  <span class="ab-glyph">◈</span>
+  <span>archive · raBbLE-server</span>
+  <span class="ab-mid" style="text-transform:none">RaBbLE Collective · genesis artifact</span>
+  <span>pre-collective · read-only</span>
+</footer>
+
+</body>
+</html>

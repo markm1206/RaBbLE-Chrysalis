@@ -41,7 +41,7 @@ fi
 info "Starting Chrysalis-Web server on port 8081..."
 
 # Try to open browser after server starts (non-blocking)
-(sleep 0.5 && (command -v xdg-open &>/dev/null && xdg-open "http://localhost:8081/chrystalis/" || (command -v open &>/dev/null && open "http://localhost:8081/chrystalis/"))) &
+(sleep 0.5 && (command -v xdg-open &>/dev/null && xdg-open "http://localhost:8081/" || (command -v open &>/dev/null && open "http://localhost:8081/"))) &
 
 # Keep running node server in foreground
 node "$DEV_SERVER"
