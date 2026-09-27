@@ -3,5 +3,8 @@
   "compatibility_date": "2026-05-06",
   "assets": {
     "directory": "."
-  }
+  },
+  "routes": [
+    { "pattern": "chrysalis.joinrabble.world", "custom_domain": true }
+  ]
 }

@@ -1,0 +1,23 @@
+name: Deploy Chrysalis-Web to Cloudflare Workers
+
+# chrysalis.joinrabble.world: the reliquary channel, parallel to dev.joinrabble.world (S234).
+on:
+  push:
+    branches: [main]
+    paths: ['Chrysalis-Web/**', '.github/workflows/deploy.yml']
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy Chrysalis-Web (chrysalis.joinrabble.world)
+    defaults:
+      run:
+        working-directory: Chrysalis-Web
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy via Wrangler
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
