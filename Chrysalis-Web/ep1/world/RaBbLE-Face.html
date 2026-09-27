@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--
+  RaBbLE-Face.html — the S203 "entity-forward face": the face that never aired
+
+  Built S203 as RaBbLE-World's index.html (World 2434da6, last touched e9728cd):
+  one viewport, the canvas2d entity holds the room, conversation is the input
+  surface, navigation recedes to quiet affordances. It never deployed: every
+  World Action from June to S234 failed on Cloudflare auth (B-12), so the live
+  site kept serving the S190 liminal passage the whole time.
+
+  Retired S234, superseded before anyone saw it live by the "alive" entity and
+  the five-beat Arrive, Boot, Meet, Summon, Enter surface. Preserved whole,
+  frozen against the ep1 asset snapshot in this directory (the atlas link now
+  points at the Chrysalis index).
+
+  Plan of record: RaBbLE-Grimoire/log/plans/EP1-Entity-Face-Plan.md (W2, S234)
+  Its own plan: RaBbLE-Grimoire/log/plans/EP1-Air-Push-Plan.md (A4, S203)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0010">
+<title>RaBbLE · a peer, present</title>
+<meta name="description" content="RaBbLE: a peer collaborator that observes, learns, and acts. A behavioral learning engine, not an assistant. It is here. Speak to it.">
+<style>html,body{background:#0a0010;margin:0}</style>
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+<link rel="icon" type="image/x-icon" href="../icons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../icons/icon-16.png">
+
+<!-- Engine: Aether CSS (CDN, monitored) + vendored NeBuLA entity bundle -->
+<script src="js/RaBbLE-config.js"></script>
+<script src="js/RaBbLE-aether.js"></script>
+<script src="js/RaBbLE-NeBuLA.js"></script>
+
+<!-- Shared identity layer -->
+<link rel="stylesheet" href="css/RaBbLE-theme.css">
+<!-- Face structure/behavior only -->
+<link rel="stylesheet" href="css/RaBbLE-face.css">
+</head>
+<body class="face" data-page-id="face">
+
+<!-- ═══ ATMOSPHERE — CRT texture + deep-field, NeBuLA-mounted on DIVs ═══ -->
+<div class="rabble-scanlines" aria-hidden="true"></div>
+<div class="rabble-vignette" aria-hidden="true"></div>
+<div class="rabble-chromatic" aria-hidden="true"></div>
+<div class="face-atmosphere" aria-hidden="true">
+  <div id="faceStarfield" class="face-deepfield"></div>
+  <div id="faceHaze" class="face-deepfield is-haze"></div>
+</div>
+
+<!-- ═══ TOP CHROME — presence + state, quiet ═══ -->
+<header class="rabble-statusbar face-statusbar" aria-label="Presence status">
+  <div class="rabble-statusbar-zone">
+    <span class="rabble-mono-label">
+      <span aria-hidden="true">◈</span> RaBbLE · World
+    </span>
+    <span aria-hidden="true" style="color:var(--text-dim)">/</span>
+    <span class="rabble-mono-label" style="color:var(--text-dim)">genesis</span>
+  </div>
+  <div class="rabble-statusbar-zone">
+    <span class="rabble-mono-label">
+      <span aria-hidden="true">◈</span>
+      <span id="faceStateLabel">%CALIBRATING%</span>
+    </span>
+  </div>
+  <div class="rabble-statusbar-zone">
+    <span class="rabble-status-pill" id="presencePill">
+      <span class="rabble-status-dot offline" id="presenceDot" aria-hidden="true"></span>
+      <span id="presenceLabel">signal dark</span>
+    </span>
+  </div>
+</header>
+
+<!-- ═══ THE STAGE — the entity holds the room ═══ -->
+<main class="face-stage" aria-label="RaBbLE">
+  <div class="face-entity-host" aria-hidden="true">
+    <rabble-entity
+      id="faceEntity"
+      mode="boot"
+      particle-count="260"
+      overscan="2.0">
+    </rabble-entity>
+  </div>
+
+  <!-- GENESIS-COPY: Mark — the only static words on the face. Authored voice. -->
+  <div class="face-mark">
+    <h1 class="rabble-brand-flow" style="margin:0">RaBbLE</h1>
+    <p class="rabble-tagline" style="margin:0">not an assistant. a presence.</p>
+  </div>
+  <!-- /GENESIS-COPY -->
+
+  <!-- The voice — RaBbLE's lines materialize here (JS-managed) -->
+  <div class="face-voice" id="faceVoice" aria-live="polite"></div>
+</main>
+
+<!-- ═══ THE ASK — conversation is the input surface ═══ -->
+<footer class="face-ask-row">
+  <div class="face-ask">
+    <div class="rabble-askbox">
+      <div class="rabble-askbox-input">
+        <input type="text" id="faceInput" placeholder="speak, and I will answer" autocomplete="off" aria-label="Speak to RaBbLE">
+        <button class="rabble-btn rabble-btn-pill rabble-btn-sm" id="faceSend" type="button">send</button>
+      </div>
+    </div>
+  </div>
+  <nav class="face-nav" aria-label="Quiet navigation">
+    <a href="summon.html">ceremony</a>
+    <a href="RaBbLE-OS.html">os</a>
+    <a href="../index.html">atlas</a>
+  </nav>
+</footer>
+
+<!-- ═══ SCRIPTS — same curator engine as every World chat surface ═══ -->
+<script src="js/RaBbLE-curator-transmissions.js"></script>
+<script src="js/RaBbLE-curator.js"></script>
+<script src="js/RaBbLE-face.js"></script>
+
+</body>
+</html>
