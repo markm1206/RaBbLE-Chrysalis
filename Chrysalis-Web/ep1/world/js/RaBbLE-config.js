@@ -19,7 +19,7 @@
 
   // ── Production endpoints — edit these as services move/rename ───────────────
   var PROD_API_URL    = 'https://score.joinrabble.world';             // sCoRE (CF Worker → Render)
-  var PROD_AETHER_URL = 'https://aether.joinrabble.world/v0.0.0.1-rc.1/aether.min.css'; // Aether CDN — bump version on deploy
+  var PROD_AETHER_URL = 'https://aether.joinrabble.world/v0.0.0.1-rc.2/aether.min.css'; // Reliquary pin (S249): rc.2, the Face + S190 passage were built on it; superset of rc.1
   var PROD_NEBULA_URL = 'https://nebula.joinrabble.world/v0.0.0.1-rc.1/nebula.iife.js'; // NeBuLA CDN — bump version on deploy
 
   // ── Local endpoints (harness/local.sh + dev-serve.sh CDN mock) ──────────────

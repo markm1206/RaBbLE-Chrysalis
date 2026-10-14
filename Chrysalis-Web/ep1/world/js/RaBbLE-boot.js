@@ -1,5 +1,6 @@
 // ── Background ─────────────────────────────────────────────────────────────
-var bg = new RaBbLEBackground({ particles: true, grid: true, cursorTrail: true, clickRipples: true });
+// Reliquary (S249): RaBbLEBackground was absorbed into NeBuLA.AmbientField (S54); bg is unused below.
+var bg = (window.NeBuLA && window.NeBuLA.AmbientField) ? new window.NeBuLA.AmbientField({ particles: true, grid: true }) : null;
 
 // ── Entity (boot mode) ─────────────────────────────────────────────────────
 var entity = document.getElementById('entityHost');

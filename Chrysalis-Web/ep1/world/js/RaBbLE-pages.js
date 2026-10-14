@@ -135,16 +135,16 @@
     },
   ];
 
-  // Helper to dynamically resolve URLs under a subpath like /chrysalis/ or /chrystalis/
-  var match = window.location.pathname.match(/^(\/(chrysalis|chrystalis)(?:-web)?\/)/i);
-  var basePath = match ? match[1] : '/';
+  // Reliquary path resolution (S249). The EP1 app is frozen under <prefix>/ep1/ on
+  // chrysalis.joinrabble.world (prefix = '' on the subdomain, '/chrysalis' on the old
+  // path mount). Absolute page URLs like /world/X.html → <prefix>/ep1/world/X.html.
+  var match = window.location.pathname.match(/^(.*?\/ep1)\//i);
+  var base = match ? match[1] : null;
 
   function resolveUrl(url) {
-    if (basePath === '/') return url;
-    // World EP1 app lives at /chrysalis/ep1/ — absolute page URLs like /world/X.html
-    // must resolve to /chrysalis/ep1/world/X.html (ep1/ subdir inside the archive).
-    if (url === '/') return basePath + 'index.html';
-    if (url.indexOf('/') === 0) return basePath + 'ep1' + url;
+    if (base === null) return url;
+    if (url === '/') return base + '/index.html';
+    if (url.indexOf('/') === 0) return base + url;
     return url;
   }
 
