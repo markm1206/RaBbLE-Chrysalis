@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0010">
+<title>RaBbLE · one living surface</title>
+<meta name="description" content="RaBbLE — a peer collaborator that observes, learns, and acts. A behavioral learning engine, not an assistant.">
+<style>html,body{background:#0a0010;margin:0}</style>
+<link rel="manifest" href="/world-2026-06/manifest.json">
+<link rel="apple-touch-icon" href="/world-2026-06/icons/icon-192.png">
+<link rel="icon" type="image/x-icon" href="/world-2026-06/icons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/world-2026-06/icons/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/world-2026-06/icons/icon-16.png">
+
+<!-- Engine: Aether CSS + NeBuLA entity bundle (CDN, monitored) -->
+<script src="/world-2026-06/world/js/RaBbLE-config.js"></script>
+<script src="/world-2026-06/world/js/RaBbLE-aether.js"></script>
+<script src="/world-2026-06/world/js/RaBbLE-NeBuLA.js"></script>
+
+<!-- Shared identity layer -->
+<link rel="stylesheet" href="/world-2026-06/world/css/RaBbLE-theme.css">
+
+<!-- RC1 unified surface tokens + layout -->
+<link rel="stylesheet" href="/world-2026-06/world/css/RaBbLE-unified.css">
+<!-- Wave-1 component styles -->
+<link rel="stylesheet" href="/world-2026-06/world/css/RaBbLE-floor.css">
+<link rel="stylesheet" href="/world-2026-06/world/css/RaBbLE-panels.css">
+<style>
+.chrysalis-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;padding:6px 16px;background:color-mix(in srgb,#0a0010 82%,transparent);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);border-top:1px solid #2a2840;font-family:monospace;font-size:11px;color:#6b6880;display:flex;align-items:center;gap:12px}
+.chrysalis-banner a{color:#00f5ff;text-decoration:none;opacity:.8}
+.chrysalis-banner a:hover{opacity:1}
+.chrysalis-banner .cb-glyph{color:#ff2d78;font-size:13px}
+</style>
+</head>
+<body class="booting">
+
+<!-- ═══ STAGE — the one living surface ════════════════════════════════════
+     Entity stage left · panel/centerpiece host right · dock bottom
+     Progress rail across the top of the panel region.                   -->
+<div id="stage">
+
+  <!-- Progress rail: slim 2px fill across the top -->
+  <div id="progress-rail" aria-hidden="true">
+    <div class="rail-fill"></div>
+  </div>
+
+  <!-- Persistent entity (left column on desktop, top row on mobile) -->
+  <div id="entity-stage">
+    <rabble-entity
+      mode="boot"
+      particle-count="480"
+      overscan="2.6">
+    </rabble-entity>
+  </div>
+
+  <!-- Spatial / centerpiece content: Three.js floor, void, etc. -->
+  <div id="centerpiece-host" aria-hidden="true"></div>
+
+  <!-- Aether panel content: the active movement's panels render here -->
+  <div id="panel-host" role="main" aria-live="polite" aria-label="RaBbLE experience"></div>
+
+  <!-- Curator dock: persistent, expands to focus-converse mode -->
+  <div id="dock-host"></div>
+
+</div>
+
+<!-- ═══ SCRIPTS — load order: config → curator → stage → movements ════════
+     Each Wave-1 module self-registers or sets ctx.* before boot() fires.
+     Stage boot() is called at the bottom once everything is ready.      -->
+
+<!-- Curator engine (hybrid: always-scripted + optional live sCoRE) -->
+<script src="/world-2026-06/world/js/RaBbLE-curator-transmissions.js"></script>
+<script src="/world-2026-06/world/js/RaBbLE-curator.js"></script>
+
+<!-- Stage state machine (defines window.RaBbLEStage + shared ctx) -->
+<script src="/world-2026-06/world/js/RaBbLE-stage.js"></script>
+
+<!-- Wave-1 modules (load order matters for ctx population) -->
+<script defer src="/world-2026-06/world/js/RaBbLE-ui.js"></script>
+<script defer src="/world-2026-06/world/js/RaBbLE-Grimoire-Data.js"></script>
+<script defer src="/world-2026-06/world/js/RaBbLE-floor.js"></script>
+<script defer src="/world-2026-06/world/js/RaBbLE-dock.js"></script>
+<script defer src="/world-2026-06/world/js/RaBbLE-movements-data.js"></script>
+<script defer src="/world-2026-06/world/js/RaBbLE-movements.js"></script>
+
+<script>
+// Boot: wait for DOM + all deferred scripts, then start the stage.
+// Movement modules register themselves synchronously on load.
+window.addEventListener('load', function () {
+  if (window.RaBbLEStage) window.RaBbLEStage.boot();
+});
+</script>
+
+<aside class="chrysalis-banner" aria-label="Archive notice"><span class="cb-glyph">◈</span><span>Archive: joinrabble.world as it stood from June to November 2026. Live chat is off here; the scripted voice remains.</span><a href="/">back to the Genesis Web</a></aside>
+</body>
+</html>
